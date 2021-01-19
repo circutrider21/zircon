@@ -13,6 +13,7 @@ jobs:
     - name: configure
       run: |
         cd $GITHUB_WORKSPACE
+        sudo apt install xorriso mtools
         ./scripts/download-prebuilt
     - name: make
       run: make -j 8
@@ -25,4 +26,4 @@ jobs:
         # Artifact name
         name: ISO
         # A file, directory or wildcard pattern that describes what to upload
-        path: ./zircon.iso
+        path: ./build-x64/zircon.iso
