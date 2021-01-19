@@ -1,0 +1,28 @@
+name: Zircon CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: configure
+      run: |
+        cd $GITHUB_WORKSPACE
+        ./scripts/download-prebuilt
+    - name: make
+      run: make -j 8
+    - name: build iso
+      run: ./scripts/make-zircon-x64-grub
+    
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        # Artifact name
+        name: ISO
+        # A file, directory or wildcard pattern that describes what to upload
+        path: ./zircon.iso
